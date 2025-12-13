@@ -1,16 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poly:ital@0;1&display=swap');
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #F1EEED;
+    --bg-color-dark: #EAE7E6;
+    --text-primary: #001C23;
+    --text-main: #547F8A;
+    --text-subtle: #9DB2B8;
+  }
+}
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  font-family: "Inter", Helvetica, Arial, sans-serif;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+}
+
+
+input {
+  all: unset;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  
+  min-height: 100vh;
+  width: 100%;
+}
+.container {
+  margin:  10rem auto 0 auto;
+  min-width: 800px;
+}
+
+h1 {
+  color: var(--text-main);
+  font-size: 4rem;
+  line-height: 1.5;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.1;
+}
+h2 {
+  color: var(--text-subtle);
+  font-family: "Poly", Georgia, 'Times New Roman', Times, serif;
+  margin: 0;
 }
 
 a {
@@ -22,18 +64,8 @@ a:hover {
   color: #535bf2;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
+
 
 button {
   border-radius: 8px;
@@ -54,15 +86,26 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--bg-color-dark);
+  border-radius: 42px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.1);
+  border-radius: 36px;
+  height: 60px;
+  margin-top: 2rem;
+  padding: 0 1.1rem;
+}
+
+.search-bar {
+  width: 100%;
+  font-size: 1.1rem;
+}
+.search-bar ~ svg {
+  margin-right: 1rem;
+  font-size: 1.7rem;
 }
