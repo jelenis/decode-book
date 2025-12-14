@@ -11,9 +11,9 @@ export default function Search({onSearch}: {onSearch: (formData: FormData) => vo
         name='search'
         aria-label='search'
         className='search-bar'
-        type='search'
         maxLength={80}
         placeholder='Is EMT good for outdoor use?'
+        autoComplete="off"
         value={text}
         onChange={e => setText(e.currentTarget.value)}
         />
