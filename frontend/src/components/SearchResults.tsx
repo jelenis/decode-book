@@ -24,7 +24,6 @@ function renderResults(rules: CodeRule[]): ReactNode {
 
     return sections.map(([section, rules]) => (
         <Section key={section} section={section}>
-
             {rules.map((rule, idx) => (
                 <motion.div
                     key={rule.ruleNumber}

@@ -12,7 +12,7 @@ import useChannel from '../hooks/useChannel';
 const SUPABASE_FUNCTION_URL = 'https://zjzpmvfuhgndocqkreks.supabase.co/functions/v1/decode-book'
 const SUPABASE_KEY = 'sb_publishable_D09vuim214cRhV-ieD27Wg_zAN3yK4t'
 
-const TEST_MODE = true;
+const TEST_MODE = false;
 
 async function queryDecodeBook(searchTerm: string, channelName: string, setCurrentSearchText: (str: string) => string) {
     if (TEST_MODE) {
