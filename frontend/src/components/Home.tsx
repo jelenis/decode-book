@@ -10,7 +10,7 @@ import SearchResults from './SearchResults'
 import useChannel from '../hooks/useChannel';
 
 const SUPABASE_FUNCTION_URL = 'https://zjzpmvfuhgndocqkreks.supabase.co/functions/v1/decode-book'
-const SUPABASE_KEY = 'sb_publishable_D09vuim214cRhV-ieD27Wg_zAN3yK4t'
+const SUPABASE_ANON_KEY = 'sb_publishable_D09vuim214cRhV-ieD27Wg_zAN3yK4t'
 
 const TEST_MODE = false;
 
@@ -25,8 +25,8 @@ async function queryDecodeBook(searchTerm: string, channelName: string, setCurre
             method: 'POST',
 
             headers: {
-                Authorization: `Bearer ${SUPABASE_KEY}`,
-                apikey: SUPABASE_KEY,
+                Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+                apikey: SUPABASE_ANON_KEY,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({name: channelName, searchTerm })
