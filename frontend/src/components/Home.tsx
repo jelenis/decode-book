@@ -1,6 +1,7 @@
 // Debug mode: set VITE_DEBUG=true in your .env file to enable
 import { useState, useEffect } from 'react'
 import { GiWhiteBook } from "react-icons/gi";
+import { nanoid } from 'nanoid';
 import {
     useQuery,
 } from '@tanstack/react-query'
@@ -68,7 +69,7 @@ export default function Home() {
         const query = formdata.get("search") as string
         if (query && query.trim()) {
             setCurrentSearchText("Embedding your query...");
-            setChannelName(crypto.randomUUID())
+            setChannelName(nanoid())
             setSearchTerm(query.trim())
         }
     }
