@@ -1,12 +1,11 @@
 import type {CodeRule} from './types'
-import { MdNavigateNext } from "react-icons/md";
 import { capitalize, abbreviateLabel } from './utils';
 
 export default function RuleCard({rule}: {rule: CodeRule}) {
     let { 
         ruleNumber, 
         section, 
-        subsection, 
+        // subsection, 
         subRuleLabel, 
         title, 
         relevanceExplanation
