@@ -64,8 +64,8 @@ Deno.serve(async (req)=>{
       });
     }
   }
-  if (searchTerm.length < 3) {
-    return errorResponse(new Error("query too short"));
+  if (typeof searchTerm !== 'string' || searchTerm.length < 3 || searchTerm.length > 300) {
+    return errorResponse(new Error("Invalid query"));
   }
   try {
     const resp = await assitant.ask(searchTerm, onToolCall);

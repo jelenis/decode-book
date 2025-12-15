@@ -63,7 +63,7 @@ export default function SearchResults({
             )}
             {isSuccess && searchResults?.rules.length && (
                 <div>
-                    <h3 className="code-rule-section">Results</h3>
+                    <h2 className="code-rule-section">Results</h2>
                     <div className="divider"></div>
                     <motion.div
                         initial={{ opacity: 0, y: 3 }}

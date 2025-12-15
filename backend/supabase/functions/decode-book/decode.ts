@@ -98,10 +98,11 @@ export function createDecodeAssistant(config) {
                 - subRuleLabel: if the text clearly indicates sub-rules number/letter (e.g. "1)", "2)", "a)"), include them in this array; otherwise null. Only include the subrules that contain the relvevant information.
                 - relevanceExplanation: briefly state why this excerpt is relevant.
         - "conclusion":
-            - A single brief professional (but readable to the layman) sentence answering the user's question.
+            - A brief professional (but readable to the layman) explanation answering the user's question.
             - Must be based ONLY on the excerpts you provided in "rules".
             - If mentioning the relevant rule numbers, put them beside the parts you concluded from it e.g. "(Rules 12-3016, 30-1206)".
             - The conclusion sentence must be the final part of your reasoning; no follow-up offers or extra commentary.
+            - No more than three sentances long.
             
         If no tool results clearly address the question:
         - Provide a single rule entry mirroring the most relevant tool result if available, or return an empty list ONLY when there truly are no relevant results.

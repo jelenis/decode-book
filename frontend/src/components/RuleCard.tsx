@@ -22,9 +22,8 @@ export default function RuleCard({rule}: {rule: CodeRule}) {
 
     return (
         <div className='code-rule'>
-            
             <div className='card'>
-                <h4 className='code-rule-title'>{`${ruleNumber}: ${title}`}</h4>
+                <h3 className='code-rule-title'>{`${ruleNumber}: ${title}`}</h3>
                 {subRuleLabel?.length && <span className='code-rule-subrule'>
                     Subrule { subRuleLabel.join(', ')}
                 </span>}
