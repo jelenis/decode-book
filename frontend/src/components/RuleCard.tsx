@@ -2,7 +2,6 @@ import type {CodeRule} from './types'
 import { MdNavigateNext } from "react-icons/md";
 import { capitalize, abbreviateLabel } from './utils';
 
-
 export default function RuleCard({rule}: {rule: CodeRule}) {
     let { 
         ruleNumber, 
@@ -13,12 +12,12 @@ export default function RuleCard({rule}: {rule: CodeRule}) {
         relevanceExplanation
     } = rule;
 
+    // format text
     title = title.replace(/\(see Appendix *.\)/g, '')
     section = capitalize(section);
     title = capitalize(title);
 
     subRuleLabel = subRuleLabel && abbreviateLabel(subRuleLabel)
-    
 
     return (
         <div className='code-rule'>

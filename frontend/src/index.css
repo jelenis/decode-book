@@ -1,4 +1,8 @@
+/* =====================
+   Imports & Variables
+   ===================== */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nova+Round&family=Poly:ital@0;1&display=swap');
+
 @media (prefers-color-scheme: dark) {
   :root {
     --bg-color: #F1EEED;
@@ -22,17 +26,14 @@
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg-color-dark);
   color: var(--text-primary);
-
   --fs-h1: 3rem;
-  --fs-h2: 1.5rem;  
-  --fs-h3: 1.295rem;  
-  --fs-h4: 1.10rem;  
+  --fs-h2: 1.5rem;
+  --fs-h3: 1.295rem;
+  --fs-h4: 1.10rem;
   --fs-body: 1.19rem;
-}
-/*  */
-:root {
   font-size: 14px; /* mobile default */
 }
+
 @media (min-width: 640px) {
   :root {
     font-size: 16px;
@@ -48,12 +49,15 @@
     font-size: 20px;
   }
 }
-input {
-  all: unset;
-}
 h1,h2,h3,h4,h5 {
  margin: 0;
 }
+/* =====================
+   Layout & Containers
+   ===================== */
+input { all: unset; }
+
+h1, h2, h3, h4, h5 { margin: 0; }
 
 body {
   margin: 0;
@@ -63,43 +67,43 @@ body {
   width: 100%;
   line-height: 1.3;
 }
+
 .container {
-  margin:  3rem auto 0 auto;
+  margin: 3rem auto 0 auto;
   width: 80%;
   max-width: 800px;
 }
 
 @media (min-width: 640px) {
   .container {
-    margin:  10rem auto 0 auto;
+    margin: 10rem auto 0 auto;
   }
 }
 
-/* Font size variables for headings and body */
 h1 {
   color: var(--text-main);
   font-size: var(--fs-h1);
   font-weight: 800;
   line-height: 1.1;
 }
-/* very small screens */
-.page-title svg {
-  vertical-align: middle;
-}
-@media (max-width: 400px) {
-  .page-title {
-    font-size: 2.1rem;
-  }
-  .page-subtitle {
-    font-size: 1.1rem;
-  }
+
+/* =====================
+   Typography
+   ===================== */
+h1 {
+  color: var(--text-main);
+  font-size: var(--fs-h1);
+  font-weight: 800;
+  line-height: 1.1;
 }
 
-h2 {
-  color: var(--text-subtle);
-  font-family: var(--serif-font);
-  font-size: var(--fs-h2);
+/* very small screens */
+.page-title svg { vertical-align: middle; }
+@media (max-width: 400px) {
+  .page-title { font-size: 2.1rem; }
+  .page-subtitle { font-size: 1.1rem; }
 }
+
 h3 {
   font-size: var(--fs-h3);
 }
@@ -107,14 +111,24 @@ h4 {
   font-size: var(--fs-h4);
 }
 
+h2 {
+  color: var(--text-subtle);
+  font-family: var(--serif-font);
+  font-size: var(--fs-h2);
+}
+h3 { font-size: var(--fs-h3); }
+h4 { font-size: var(--fs-h4); }
+
+
+/* =====================
+   Code Rule Cards
+   ===================== */
 .code-rule .divider {
   height: 2px;
   margin: 1rem 0 1rem 0;
 }
 @media (min-width: 640px) {
-  .code-rule .divider {
-    margin: 1rem 0 1.5rem 0;
-  }
+  .code-rule .divider { margin: 1rem 0 1.5rem 0; }
 }
 .code-rule-section {
   color: var(--text-main);
@@ -130,9 +144,7 @@ h4 {
   color: var(--text-main);
 }
 @media (min-width: 640px) {
-  .code-rule-title {
-    margin-bottom: 0.6rem;
-  }
+  .code-rule-title { margin-bottom: 0.6rem; }
 }
 .code-rule-subrule {
   color: var(--text-main);
@@ -147,6 +159,10 @@ h4 {
 }
 
 
+
+/* =====================
+   Search Bar
+   ===================== */
 .search-bar-container {
   display: flex;
   align-items: center;
@@ -164,7 +180,6 @@ h4 {
   .search-bar-container {
     height: 60px;
     padding: 0 1.1rem;
-    
   }
 }
 
@@ -175,10 +190,14 @@ h4 {
 .search-bar ~ svg {
   margin-right: 1rem;
   font-size: 1.7rem;
-  color: var(--text-main)
+  color: var(--text-main);
 }
 
 
+
+/* =====================
+   Loader & Misc
+   ===================== */
 .loader-container {
   display: flex;
   justify-content: start;
@@ -188,9 +207,7 @@ h4 {
   font-size: var(--fs-h3);
 }
 @media (min-width: 640px) {
-  .loader-container {
-    font-size: var(--fs-h2);
-  }
+  .loader-container { font-size: var(--fs-h2); }
 }
 
 .conclusion {
@@ -198,17 +215,16 @@ h4 {
   line-height: 1.5;
   margin-bottom: 3rem;
 }
-
 @media (min-width: 640px) {
-  .conclusion {
-    font-size: var(--fs-h4, 1.2rem);
-  }
-
+  .conclusion { font-size: var(--fs-h4, 1.2rem); }
 }
 
 
 
-/* Utility classes for CSS variables */
+
+/* =====================
+   Utility Classes
+   ===================== */
 .text-primary { color: var(--text-primary); }
 .text-secondary { color: var(--text-secondary); }
 .text-main { color: var(--text-main); }

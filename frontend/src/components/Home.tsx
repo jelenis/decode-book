@@ -11,8 +11,6 @@ import useChannel from '../hooks/useChannel';
 
 const SUPABASE_FUNCTION_URL = 'https://zjzpmvfuhgndocqkreks.supabase.co/functions/v1/decode-book'
 const SUPABASE_ANON_KEY = 'sb_publishable_D09vuim214cRhV-ieD27Wg_zAN3yK4t'
-
-
 const DEBUG_MODE = true;
 
 async function queryDecodeBook(searchTerm: string, channelName: string, setCurrentSearchText: (str: string) => void) {
@@ -24,7 +22,6 @@ async function queryDecodeBook(searchTerm: string, channelName: string, setCurre
     const resp = await fetch(SUPABASE_FUNCTION_URL,
          {
             method: 'POST',
-
             headers: {
                 Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
                 apikey: SUPABASE_ANON_KEY,
@@ -33,10 +30,10 @@ async function queryDecodeBook(searchTerm: string, channelName: string, setCurre
             body: JSON.stringify({name: channelName, searchTerm })
          }
     );
+
     if (resp.ok) {
         setCurrentSearchText("Complete")
         await new Promise(res => setTimeout(res, 800));
-        
     }
 
     return await resp.json();
@@ -47,6 +44,8 @@ export default function Home() {
     const [currentSearchText, setCurrentSearchText] = useState('')
     const [channelName, setChannelName] = useState('');
 
+
+    // subscribe to a broad cast channel for updates during RAG
     const resp = useChannel(channelName);
     useEffect(() => {
         if (!resp?.update) return;
@@ -55,7 +54,7 @@ export default function Home() {
     }, [resp])
 
 
-    // TanStack Query for search
+    // TanStack for search
     const { data: searchResults, isLoading, error, isSuccess } = useQuery({
         queryKey: [searchTerm.toLowerCase()],
         queryFn: async () => queryDecodeBook(searchTerm, channelName, setCurrentSearchText),
@@ -78,7 +77,6 @@ export default function Home() {
             <h2 className='page-subtitle'>AI Powered Electrical Code</h2>
             <Search onSearch={onSearch} />
 
-            {/* Search Results */}
             <SearchResults
                 isLoading={isLoading}
                 error={error}
@@ -87,7 +85,6 @@ export default function Home() {
                 currentSearchText={currentSearchText}
                 searchTerm={searchTerm}
             />
-         
         </div>
     )
 }
