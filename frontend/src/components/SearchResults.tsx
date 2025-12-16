@@ -4,6 +4,7 @@ import Loader from './Loader';
 import type { ReactNode } from 'react';
 import { groupBy } from './utils';
 import Section from './Section';
+import { CiStickyNote } from "react-icons/ci";
 
 import { motion } from "framer-motion";
 
@@ -44,6 +45,40 @@ function renderResults(rules: CodeRule[]): ReactNode {
     ));
 }
 
+function renderConclusion(rawText: string): ReactNode {
+    // capture all continous spaces and non space characters
+    // this preserves spaces to map jsx
+    const tokens = rawText.match(/\s+|\S+/g);
+    if (!tokens) return null;
+
+    const elementsArr = tokens.map((word,i) => {
+        const match = word.match(/\[(\d+-\d+)\]/)
+        if (match) {
+            return <sup key={match[1]} className='reference'>
+                {/*  TODO Handle references here */}
+                {/* {match[1]} */}
+                {/* <CiStickyNote/> */}
+            </sup>
+        }
+        return word;
+    });
+
+    const output = [];
+    for (let i = 0; i < elementsArr.length; i++ ){
+        const cur = elementsArr[i];
+        const prev = elementsArr[i-1];
+        if (typeof prev !== 'string' && typeof cur !== 'string') {
+            // this is a consecutive code reference
+            // do nothing
+            output.push(' ')
+        } 
+        output.push(cur)
+        
+    }
+
+    return output;
+}
+
 export default function SearchResults({
     isLoading,
     error,
@@ -52,7 +87,9 @@ export default function SearchResults({
     currentSearchText,
     searchTerm,
 }: SearchResultsProps) {
-  
+
+
+
     return (
         <div className="search-results" style={{ marginTop: '2rem' }}>
             {isLoading && <Loader currentSearchText={currentSearchText} />}
@@ -74,9 +111,11 @@ export default function SearchResults({
                             ease: 'easeInOut',
                         }}
                     >
-                        <p className='conclusion'>{searchResults.conclusion}</p>
+                        <p className='conclusion'>{
+                            renderConclusion(searchResults.conclusion)
+                        }</p>
                     </motion.div>
-                    
+
                     {renderResults(searchResults.rules)}
                 </div>
             )}

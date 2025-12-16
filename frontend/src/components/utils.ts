@@ -27,7 +27,7 @@ export function capitalize(str: string) {
   if (!str) return '';
 
   str = str.toLowerCase();
-  return str.replace(/\b\w+\b/g, (word: string) => {
+  return str.replace(/\b\S+\b/g, (word: string) => {
     
     return ignoreWord.has(word) ? word : word[0].toUpperCase() + word.slice(1)
   });

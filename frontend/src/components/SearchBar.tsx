@@ -1,7 +1,7 @@
 import { CiSearch } from "react-icons/ci";
 import {useState} from "react"
 
-export default function Search({onSearch}: {onSearch: (formData: FormData) => void}) {
+export default function SearchBar({onSearch}: {onSearch: (formData: FormData) => void}) {
     const [text, setText] = useState('');
 
     return (
@@ -17,6 +17,5 @@ export default function Search({onSearch}: {onSearch: (formData: FormData) => vo
         onChange={e => setText(e.currentTarget.value)}
         />
         <CiSearch />
-
     </form>)
 }

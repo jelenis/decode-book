@@ -4,6 +4,7 @@ import { embed, generateText, stepCountIs, Output, tool } from 'npm:ai';
 import { z } from 'npm:zod';
 const PROMPT_URL = new URL("./prompt.txt", import.meta.url);
 const SYSTEM_PROMPT = await Deno.readTextFile(PROMPT_URL);
+
 export function createDecodeAssistant(config) {
   const supabase = createClient(config.supabaseUrl, config.supabaseKey);
   const openai = createOpenAI({

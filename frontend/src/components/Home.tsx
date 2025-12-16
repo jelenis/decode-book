@@ -6,7 +6,7 @@ import {
     useQuery,
 } from '@tanstack/react-query'
 
-import Search from './Search'
+import SearchBar from './SearchBar'
 import SearchResults from './SearchResults'
 import useChannel from '../hooks/useChannel';
 import mockQuery from './MockQuery'
@@ -84,7 +84,7 @@ export default function Home() {
         <div>
             <h1 className='page-title'>Decode Book <GiWhiteBook /></h1>
             <h2 className='page-subtitle'>AI Powered Electrical Code</h2>
-            <Search onSearch={onSearch} />
+            <SearchBar onSearch={onSearch} />
 
             <SearchResults
                 isLoading={isLoading}

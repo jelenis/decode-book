@@ -118,7 +118,10 @@ h2 {
 }
 h3 { font-size: var(--fs-h3); }
 h4 { font-size: var(--fs-h4); }
-
+.reference {
+  color: var(--text-main);
+  font-size: 0.7rem;
+}
 
 /* =====================
    Code Rule Cards
