@@ -2,6 +2,8 @@ import { createClient } from 'npm:@supabase/supabase-js';
 import { createOpenAI } from 'npm:@ai-sdk/openai';
 import { embed, generateText, stepCountIs, Output, tool } from 'npm:ai';
 import { z } from 'npm:zod';
+const PROMPT_URL = new URL("./prompt.txt", import.meta.url);
+const SYSTEM_PROMPT = await Deno.readTextFile(PROMPT_URL);
 export function createDecodeAssistant(config) {
   const supabase = createClient(config.supabaseUrl, config.supabaseKey);
   const openai = createOpenAI({
@@ -34,7 +36,7 @@ export function createDecodeAssistant(config) {
       subRuleLabel: z.array(z.string()).nullable().describe("Array of sub-rule labels (e.g. ['1)', '2)(b)']) if they can be inferred from the text; otherwise null."),
       relevanceExplanation: z.string().describe("Very Brief explanation of how this sub-rule supports the conclusion.")
     })).min(1),
-    conclusion: z.string().describe("A single brief sentence that answers the user's question, citing the relevant rule numbers (e.g. '... (Rules 12-3016, 30-1206)').")
+    conclusion: z.string().describe("A single brief sentence that answers the user's question, citing the relevant rule numbers without the subrule label (e.g. '[12-3016] [30-1206]'). Special-condition rules MUST be explicitly indicated.")
   });
   async function ask(query, onToolCall) {
     let result = null;
@@ -71,51 +73,7 @@ export function createDecodeAssistant(config) {
           }
         })
       },
-      system: `
-        You respond ONLY by filling the JSON schema. You never speak directly to the user.
-      TOOL RULES:
-      - You have NO knowledge except what you obtain from semanticSearch, getCode, and (optionally) webSearch.
-      - If the user does NOT provide a specific rule number, you MUST call semanticSearch first.
-      - Use the "content" field of semanticSearch/getCode results to identify the specific sentence or clause that answers the question.
-      - You may call getCode when you need more detail for a known rule number, but you are allowed to answer using only semanticSearch content if it is sufficient.
-      - If the user asks if something is possible, you MUST include the necessary conditions/requirements stated by the code (not just yes/no).
-      WEB SEARCH GATING (STRICT):
-      - You MUST first form a "draft conclusion" based ONLY on semanticSearch/getCode excerpts.
-      - You may use webSearch ONLY for ONE of these purposes:
-        1) to confirm you did not miss an exception/limitation tied to the same rule numbers you already found, OR
-        2) to find additional related rule numbers when your draft conclusion is missing required conditions (e.g., bonding, fittings, derating, environment rating).
-      - You MUST NOT use webSearch to introduce a brand-new answer that contradicts the semanticSearch/getCode excerpts.
-      - After webSearch, if you find additional relevant rule numbers, you MUST call semanticSearch/getCode for those rule numbers (webSearch alone is not acceptable evidence) and the inorder to be considered true you must also find the evidence using semanticSearch/getCode.
-      - If webSearch finds nothing that leads to additional semanticSearch/getCode evidence, keep the draft conclusion.
-      reconsider but do not create new results based on websearch.
-        SCHEMA RULES:
-        - "rules":
-            - Include 1–4 rules that directly support your final conclusion.
-            - Duplicate rules shall be handled by merging their fields and revlevant Explanation
-            - For each rule:
-                - ruleNumber: from the "rule" field.
-                - section, subsection, title: copy from the tool result when present, otherwise null.
-                - subRuleLabel: if the text clearly indicates sub-rules number/letter (e.g. "1)", "2)", "a)"), include them in this array; otherwise null. Only include the subrules that contain the relvevant information.
-                - relevanceExplanation: briefly state why this excerpt is relevant.
-        - "conclusion":
-            - A brief professional (but readable to the layman) explanation answering the user's question.
-            - Must be based ONLY on the excerpts you provided in "rules".
-            - If mentioning the relevant rule numbers, put them beside the parts you concluded from it e.g. "(Rules 12-3016, 30-1206)".
-            - The conclusion sentence must be the final part of your reasoning; no follow-up offers or extra commentary.
-            - No more than three sentances long.
-            
-        If no tool results clearly address the question:
-        - Provide a single rule entry mirroring the most relevant tool result if available, or return an empty list ONLY when there truly are no relevant results.
-        - In that case set conclusion to: "I cannot find this information in the available code database."
-        VERIFICATION REQUIREMENTS:
-        - For every rule you you array, you MUST call getCode(ruleNumber) at least once to confirm the exact subrule text.
-        - For every rule in any semantic search if it applies  you MUST call getCode(ruleNumber) at least once to confirm.
-        - If getCode reveals a limiting condition or exception, you MUST incorporate it in relevanceExplanation and conclusion.
-        STOP CONDITION (required):
-        You may only produce the final JSON after BOTH are true:
-        1) You have at least ONE excerpt that directly answers the question (not just loosely related).
-        2) You have at least ONE excerpt covering constraints/requirements/limitations (where applicable).
-        If either is missing, you MUST continue searching (semanticSearch or getCode as appropriate).`,
+      system: SYSTEM_PROMPT,
       prompt: query
     });
     try {

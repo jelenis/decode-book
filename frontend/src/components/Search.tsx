@@ -4,7 +4,6 @@ import {useState} from "react"
 export default function Search({onSearch}: {onSearch: (formData: FormData) => void}) {
     const [text, setText] = useState('');
 
-
     return (
     <form id="searchbar" className='search-bar-container' action={onSearch}>
         <input

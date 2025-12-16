@@ -24,7 +24,8 @@ function sendUpdate(channelName, payload) {
 }
 function errorResponse(e) {
   return new Response(JSON.stringify({
-    error: e
+    message: e?.message,
+    code: e?.code
   }), {
     status: 400,
     headers: {
@@ -71,7 +72,6 @@ Deno.serve(async (req)=>{
     const resp = await assitant.ask(searchTerm, onToolCall);
     return successResponse(resp);
   } catch (e) {
-    console.error(e);
     return errorResponse(e);
   }
 });

@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@ai-sdk/openai": "^2.0.86",
+    "@supabase/supabase-js": "^2.87.3",
+    "ai": "^5.0.113"
+  }
+}

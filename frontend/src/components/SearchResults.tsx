@@ -52,7 +52,7 @@ export default function SearchResults({
     currentSearchText,
     searchTerm,
 }: SearchResultsProps) {
-
+  
     return (
         <div className="search-results" style={{ marginTop: '2rem' }}>
             {isLoading && <Loader currentSearchText={currentSearchText} />}
@@ -61,7 +61,7 @@ export default function SearchResults({
                     Error searching: {error instanceof Error ? error.message : 'Unknown error'}
                 </p>
             )}
-            {isSuccess && searchResults?.rules.length && (
+            {isSuccess && searchResults?.rules?.length && (
                 <div>
                     <h2 className="code-rule-section">Results</h2>
                     <div className="divider"></div>

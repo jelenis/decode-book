@@ -2,7 +2,10 @@
 # https://supabase.com/docs/guides/local-development/cli/config
 # A string used to distinguish different Supabase projects on the same host. Defaults to the
 # working directory name when running `supabase init`.
-project_id = "backend"
+project_id = "decode-book"
+
+[functions.decode-book]
+static_files = ["./functions/decode-book/prompt.txt"]
 
 [api]
 enabled = true

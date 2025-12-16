@@ -13,11 +13,14 @@ import mockQuery from './MockQuery'
 import { SUPABASE_ANON_KEY,  SUPABASE_FUNCTION_URL, DEV_MODE} from './utils';
 
 
-
 if (DEV_MODE) {
     console.log('DEV MODE ACTIVATED', DEV_MODE)
 }
-async function queryDecodeBook(searchTerm: string, channelName: string, setCurrentSearchText: (str: string) => void) {
+
+async function queryDecodeBook(
+    searchTerm: string, 
+    channelName: string, 
+    setCurrentSearchText: (str: string) => void) {
     if (DEV_MODE) {
         setCurrentSearchText("Complete");
         return mockQuery(800);
@@ -34,12 +37,14 @@ async function queryDecodeBook(searchTerm: string, channelName: string, setCurre
          }
     );
 
-    if (resp.ok) {
-        setCurrentSearchText("Complete")
-        await new Promise(res => setTimeout(res, 800));
+    const data = await resp.json();
+    if (!resp.ok) {
+        throw new Error(`Error ${data.message}`);
     }
-
-    return await resp.json();
+    setCurrentSearchText("Complete")
+    await new Promise(res => setTimeout(res, 800));
+    console.log(data);
+    return data;
 }
 
 export default function Home() {
@@ -62,6 +67,7 @@ export default function Home() {
         queryFn: async () => queryDecodeBook(searchTerm, channelName, setCurrentSearchText),
         enabled: DEV_MODE ||searchTerm.length > 3 && searchTerm.split(" ").length > 1,
         staleTime: 2 * 60 * 1000, // 2 minutes
+        retry: false
     })
     
 
