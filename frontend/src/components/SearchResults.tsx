@@ -69,9 +69,8 @@ function renderConclusion(rawText: string): ReactNode {
         const prev = elementsArr[i-1];
         if (typeof prev !== 'string' && typeof cur !== 'string') {
             // this is a consecutive code reference
-            // do nothing
             output.push(' ')
-        } 
+        }  
         output.push(cur)
         
     }

@@ -65,7 +65,7 @@ export default function Home() {
     const { data: searchResults, isLoading, error, isSuccess } = useQuery({
         queryKey: [searchTerm.toLowerCase()],
         queryFn: async () => queryDecodeBook(searchTerm, channelName, setCurrentSearchText),
-        enabled: DEV_MODE ||searchTerm.length > 3 && searchTerm.split(" ").length > 1,
+        enabled: DEV_MODE || searchTerm.length > 3 && searchTerm.split(" ").length > 1,
         staleTime: 2 * 60 * 1000, // 2 minutes
         retry: false
     })
