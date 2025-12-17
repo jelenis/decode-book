@@ -1,4 +1,4 @@
-export default async function mockQuery(time: number): Promise<any> {
+export default async function ExampleQuery(time: number): Promise<any> {
     await new Promise(res => setTimeout(res, time));
     return {
         rules: [

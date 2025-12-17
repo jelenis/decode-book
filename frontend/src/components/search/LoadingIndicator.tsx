@@ -6,7 +6,7 @@ type LoaderProps = {
   currentSearchText: string;
 };
 
-export default function Loader({ currentSearchText }: LoaderProps) {
+export default function LoadingIndicator({ currentSearchText }: LoaderProps) {
   return (
     <div className='loader-container'>
       <motion.div

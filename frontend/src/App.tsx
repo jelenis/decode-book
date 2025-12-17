@@ -1,4 +1,4 @@
-import Home from './components/Home'
+import HomePage from './components/home/HomePage'
 import {
   QueryClient,
   QueryClientProvider,
@@ -9,7 +9,7 @@ const queryClient = new QueryClient()
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Home/>
+      <HomePage/>
     </QueryClientProvider>
 
   )

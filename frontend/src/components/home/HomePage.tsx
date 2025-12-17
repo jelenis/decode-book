@@ -1,16 +1,16 @@
 // Debug mode: set VITE_DEBUG=true in your .env file to enable
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect} from 'react'
 import { GiWhiteBook } from "react-icons/gi";
 import { nanoid } from 'nanoid';
 import {
     useQuery,
 } from '@tanstack/react-query'
 
-import SearchBar from './SearchBar'
-import SearchResults from './SearchResults'
-import useChannel from '../hooks/useChannel';
-import mockQuery from './MockQuery'
-import { SUPABASE_ANON_KEY,  SUPABASE_FUNCTION_URL, DEV_MODE} from './utils';
+import SearchBar from '../search/SearchBar';
+import SearchResults from '../search/SearchResults';
+import useChannel from '../../hooks/useChannel';
+import ExampleQuery from '../examples/ExampleQuery';
+import { SUPABASE_ANON_KEY, SUPABASE_FUNCTION_URL, DEV_MODE } from '../common/utils';
 
 
 if (DEV_MODE) {
@@ -23,7 +23,7 @@ async function queryDecodeBook(
     setCurrentSearchText: (str: string) => void) {
     if (DEV_MODE) {
         setCurrentSearchText("Complete");
-        return mockQuery(800);
+        return ExampleQuery(800);
     }
     const resp = await fetch(SUPABASE_FUNCTION_URL,
          {

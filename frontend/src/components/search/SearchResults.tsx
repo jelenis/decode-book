@@ -1,12 +1,11 @@
-import RuleCard from './RuleCard';
-import type { CodeRule } from './types';
-import Loader from './Loader';
+import CodeRuleCard from '../rules/CodeRuleCard';
+import type { CodeRule } from '../common/types';
+import LoadingIndicator from './LoadingIndicator';
 import type { ReactNode } from 'react';
-import { groupBy } from './utils';
-import Section from './Section';
-import { CiStickyNote } from "react-icons/ci";
-
+import { groupBy } from '../common/utils';
+import ContentSection from '../rules/ContentSection';
 import { motion } from "framer-motion";
+import { CiStickyNote } from "react-icons/ci";
 
 type SearchResultsProps = {
     isLoading: boolean;
@@ -24,7 +23,7 @@ function renderResults(rules: CodeRule[]): ReactNode {
     );
 
     return sections.map(([section, rules]) => (
-        <Section key={section} section={section}>
+        <ContentSection key={section} section={section}>
             {rules.map((rule, idx) => (
                 <motion.div
                     key={rule.ruleNumber}
@@ -37,11 +36,10 @@ function renderResults(rules: CodeRule[]): ReactNode {
                         delay: idx * 0.15,
                     }}
                 >
-                    {<RuleCard key={rule.ruleNumber} rule={rule} />}
+                    {<CodeRuleCard key={rule.ruleNumber} rule={rule} />}
                 </motion.div>
             ))}
-
-        </Section>
+        </ContentSection>
     ));
 }
 
@@ -86,12 +84,9 @@ export default function SearchResults({
     currentSearchText,
     searchTerm,
 }: SearchResultsProps) {
-
-
-
     return (
         <div className="search-results" style={{ marginTop: '2rem' }}>
-            {isLoading && <Loader currentSearchText={currentSearchText} />}
+            {isLoading && <LoadingIndicator currentSearchText={currentSearchText} />}
             {error && (
                 <p style={{ color: 'red' }}>
                     Error searching: {error instanceof Error ? error.message : 'Unknown error'}
@@ -114,11 +109,9 @@ export default function SearchResults({
                             renderConclusion(searchResults.conclusion)
                         }</p>
                     </motion.div>
-
                     {renderResults(searchResults.rules)}
                 </div>
             )}
-
             {isSuccess && !searchResults && (
                 <p>Sorry, I'm unable to find to determine the anser for "{searchTerm}". Try different search terms.</p>
             )}
