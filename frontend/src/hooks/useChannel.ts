@@ -1,27 +1,43 @@
 import { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
-import { SUPABASE_ANON_KEY,  SUPABASE_FUNCTION_URL} from '../components/utils';
+import { SUPABASE_ANON_KEY,  SUPABASE_URL} from '../components/utils';
 
-const supabase = createClient(SUPABASE_FUNCTION_URL, SUPABASE_ANON_KEY);
-type BroadCastPayload = {
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+type BroadCastupdate = {
   update: string;
 };
 
+/**
+ * React Hook that wraps Supabase 
+ * on each message update part of the payload is returned.
+ * @param channelName unique id of channel
+ * @returns the most recent broadcasted onthe channel
+ */
 export default function useChannel(channelName: string) {
-  const [resp, setResp] = useState<BroadCastPayload | null>(null);
+  const [update, setUpdate] = useState<string>('');
 
+  // subscribes to a channel name
   useEffect(() => {
     if (!channelName) return;
-    const channel = supabase.channel(`decode-book:${channelName}`);
-    channel.on('broadcast', { event: '*' }, (resp) => {
-      setResp(resp.payload);
-    }).subscribe();
+
+    const channel = supabase.channel(`decode-book:${channelName}`, {
+      config: { private: false },
+    });
+
+    channel.on("broadcast", { event: "*" }, ({payload}) => {
+      
+      if (typeof payload?.update === 'string') {
+        setUpdate(payload.update);
+      }
+    });
+
+    channel.subscribe();
 
     return () => {
-      supabase.removeChannel(channel);
+      channel.unsubscribe();
     };
-  }, [channelName]);
+  }, [channelName]); 
 
-  return resp;
+  return update;
 }

@@ -1,9 +1,11 @@
+export const SUPABASE_URL = 'https://zjzpmvfuhgndocqkreks.supabase.co'
 export const SUPABASE_FUNCTION_URL = 'https://zjzpmvfuhgndocqkreks.supabase.co/functions/v1/decode-book'
 export const SUPABASE_ANON_KEY ='sb_publishable_D09vuim214cRhV-ieD27Wg_zAN3yK4t'
 export const DEV_MODE = import.meta.env.VITE_DEV_MODE === 'true';
 
 const ignoreWord = new Set([
-    "a","an","the","and","but","or","nor","yet","so","at","by","for","in","of","on","to","up", "via"
+    "a","an","the","and","but","or","nor","yet","so",
+    "at","by","for","in","of","on","to","up", "via"
 ])
 
 

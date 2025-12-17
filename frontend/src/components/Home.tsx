@@ -1,5 +1,5 @@
 // Debug mode: set VITE_DEBUG=true in your .env file to enable
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { GiWhiteBook } from "react-icons/gi";
 import { nanoid } from 'nanoid';
 import {
@@ -29,7 +29,6 @@ async function queryDecodeBook(
          {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
                 apikey: SUPABASE_ANON_KEY,
                 'Content-Type': 'application/json'
             },
@@ -55,11 +54,11 @@ export default function Home() {
 
     // subscribe to a broad cast channel for updates during RAG
     const resp = useChannel(channelName);
+    // only update if different
     useEffect(() => {
-        if (!resp?.update) return;
-        const {update} = resp;
-        setCurrentSearchText(update);
-    }, [resp])
+        if (!resp) return;
+        setCurrentSearchText(resp);
+    }, [resp]);
 
     // TanStack for search
     const { data: searchResults, isLoading, error, isSuccess } = useQuery({

@@ -5,22 +5,24 @@ import { createClient } from 'npm:@supabase/supabase-js@2';
 console.info('server started');
 const assitant = createDecodeAssistant({
   supabaseUrl: Deno.env.get("SUPABASE_URL"),
-  supabaseKey: Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"),
+  supabaseKey: Deno.env.get("SECRET_KEY"),
   openaiApiKey: Deno.env.get("OPENAI_API_KEY"),
   embeddingModel: Deno.env.get("EMBEDDING_MODEL")
 });
 export const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type'
+  'Access-Control-Allow-Headers': 'x-client-info, apikey, content-type',
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
 };
-const supabase = createClient(Deno.env.get("SUPABASE_URL"), Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"));
+
+const supabase = createClient(Deno.env.get("SUPABASE_URL"), Deno.env.get("SECRET_KEY"));
 function sendUpdate(channelName, payload) {
-  supabase.channel(`decode-book:${channelName}`).send({
-    ...corsHeaders,
-    type: 'broadcast',
-    event: 'progress',
-    payload
-  });
+      const config = {
+      private: false
+    }
+  supabase.channel(`decode-book:${channelName}`, {config})
+  .httpSend('progress', payload)
+
 }
 function errorResponse(e) {
   return new Response(JSON.stringify({
@@ -50,6 +52,7 @@ Deno.serve(async (req)=>{
       headers: corsHeaders
     });
   }
+
   const { name, searchTerm } = await req.json();
   sendUpdate(name, {
     update: 'Preparing assistant…'
