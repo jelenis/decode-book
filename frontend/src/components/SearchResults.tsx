@@ -51,31 +51,31 @@ function renderConclusion(rawText: string): ReactNode {
     const tokens = rawText.match(/\s+|\S+/g);
     if (!tokens) return null;
 
-    const elementsArr = tokens.map((word,i) => {
-        const match = word.match(/\[(\d+-\d+)\]/)
-        if (match) {
-            return <sup key={match[1]} className='reference'>
-                {/*  TODO Handle references here */}
-                {/* {match[1]} */}
-                {/* <CiStickyNote/> */}
-            </sup>
-        }
-        return word;
-    });
+    // const elementsArr = tokens.map((word,i) => {
+    //     const match = word.match(/\[(\d+-\d+)\]/)
+    //     if (match) {
+    //         return <sup key={match[1]} className='reference'>
+    //             {/*  TODO Handle references here */}
+    //             {/* {match[1]} */}
+    //             {/* <CiStickyNote/> */}
+    //         </sup>
+    //     }
+    //     return word;
+    // });
 
-    const output = [];
-    for (let i = 0; i < elementsArr.length; i++ ){
-        const cur = elementsArr[i];
-        const prev = elementsArr[i-1];
-        if (typeof prev !== 'string' && typeof cur !== 'string') {
-            // this is a consecutive code reference
-            output.push(' ')
-        }  
-        output.push(cur)
+    // const output = [];
+    // for (let i = 0; i < elementsArr.length; i++ ){
+    //     const cur = elementsArr[i];
+    //     const prev = elementsArr[i-1];
+    //     if (typeof prev !== 'string' && typeof cur !== 'string') {
+    //         // this is a consecutive code reference
+    //         output.push(' ')
+    //     }  
+    //     output.push(cur)
         
-    }
+    // }
 
-    return output;
+    return rawText;
 }
 
 export default function SearchResults({
