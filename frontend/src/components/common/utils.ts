@@ -48,7 +48,14 @@ export function capitalize(str: string) {
   if (!str) return '';
   return str
     .split(' ')
-    .map((word) => (ignoreWord.has(word) ? word : word[0].toUpperCase() + word.slice(1)))
+    .map((word) => {
+      if (!word) return '';
+
+      if (ignoreWord.has(word)) {
+        return word;
+      }
+      return word[0].toUpperCase() + word.slice(1)
+    })
     .join(' ');
 }
 

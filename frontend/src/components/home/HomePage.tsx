@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { GiWhiteBook } from 'react-icons/gi';
 import { nanoid } from 'nanoid';
 import { useQuery } from '@tanstack/react-query';
+import { ToastContainer, toast } from 'react-toastify';
 
 import SearchBar from '../search/SearchBar';
 import SearchResults from '../search/SearchResults';
@@ -88,6 +89,15 @@ export default function HomePage() {
     retry: false,
   });
 
+    useEffect(() => {
+    if (error) {
+        toast.error(`${error instanceof Error ? error.message : 'Unknown error'}`);
+    } else {
+      toast.dismiss();
+    }
+  }, [error]);
+
+
   function onSearch(formdata: FormData): void {
     const query = formdata.get('search') as string;
     // count words  (split on whitespace after trimming)
@@ -101,7 +111,7 @@ export default function HomePage() {
       setChannelName(nanoid());
       setSearchTerm(trimmedQuery);
     } else {
-        setValidationError(`Please Provide at least ${minSearchWordCount} keywords.`)
+        setValidationError(`Please provide at least ${minSearchWordCount} keywords.`)
     }
   }
 
@@ -111,9 +121,29 @@ export default function HomePage() {
         Decode Book <GiWhiteBook />
       </h1>
       <h2 className="page-subtitle">AI Powered Electrical Code</h2>
+
       <SearchBar onSearch={onSearch} />
+
       {isLoading && <LoadingIndicator currentSearchText={currentSearchText}  />}
-      <SearchResults error={error} searchResults={searchResults} searchTerm={searchTerm} validationError={validationError}/>
+
+      <SearchResults 
+      error={error} 
+      searchResults={searchResults} 
+      searchTerm={searchTerm} 
+      validationError={validationError}/>
+
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }

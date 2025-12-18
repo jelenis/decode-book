@@ -6,9 +6,6 @@ import { groupBy } from '../common/utils';
 import ContentSection from '../rules/ContentSection';
 import { motion } from 'framer-motion';
 import { CiStickyNote } from 'react-icons/ci';
-import { ToastContainer, toast } from 'react-toastify';
-import { useEffect } from 'react';
-import { infinity } from 'ldrs';
 
 /** Props for the SearchResults component, including loading/error states and data. */
 type SearchResultsProps = {
@@ -97,16 +94,6 @@ export default function SearchResults({
   error,
   validationError,
 }: SearchResultsProps) {
-  useEffect(() => {
-    // Only toast for non-validation errors
-    if (error) {
-      if (!(error instanceof Error && error.name === 'ValidationError')) {
-        toast.error(`${error instanceof Error ? error.message : 'Unknown error'}`);
-      }
-    } else {
-      toast.dismiss();
-    }
-  }, [error, searchTerm]);
 
   // Determine search states
   const hasSearched = searchTerm.length > 0 && !validationError;
@@ -115,18 +102,6 @@ export default function SearchResults({
 
   return (
     <div className="search-results" style={{ marginTop: '2rem' }}>
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
 
       {validationError && (
         <div className="validation-error" role="alert" aria-live="polite">
