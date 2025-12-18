@@ -16,7 +16,7 @@ if (DEV_MODE) {
   console.log('DEV MODE ACTIVATED', DEV_MODE);
 }
 
-const minSearchWordCount = 2;
+const minSearchWordCount = 3;
 /**
  * Queries the decode-book API for search results.
  * @param searchTerm - The user's search query (will be trimmed of whitespace).
@@ -30,15 +30,6 @@ async function queryDecodeBook(
   channelName: string,
   setCurrentSearchText: (str: string) => void,
 ) {
-  // Input validation
-  if (
-    !searchTerm ||
-    typeof searchTerm !== 'string' ||
-    searchTerm.trim().length === 0 ||
-    searchTerm.split(' ').length < minSearchWordCount
-  ) {
-    throw new Error(`Invalid search, please include at least ${minSearchWordCount} words.`);
-  }
 
   const trimmedSearchTerm = searchTerm.trim();
 
@@ -73,7 +64,8 @@ export default function HomePage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentSearchText, setCurrentSearchText] = useState('');
   const [channelName, setChannelName] = useState('');
-
+  const [validationError, setValidationError] = useState<string | null>(null);
+  
   // subscribe to a broad cast channel for text-based updates during RAG and tooling
   const resp = useChannel(channelName);
   // only update if different
@@ -98,10 +90,18 @@ export default function HomePage() {
 
   function onSearch(formdata: FormData): void {
     const query = formdata.get('search') as string;
-    if (query && query.trim()) {
+    // count words  (split on whitespace after trimming)
+    const trimmedQuery = query.trim();
+    const isValid = trimmedQuery.length > 0 && trimmedQuery.split(/\s+/).length >= minSearchWordCount;
+
+    console.log(isValid)
+    setValidationError(null);
+    if (isValid) {
       setCurrentSearchText('Embedding your query...');
       setChannelName(nanoid());
-      setSearchTerm(query.trim());
+      setSearchTerm(trimmedQuery);
+    } else {
+        setValidationError(`Please Provide at least ${minSearchWordCount} keywords.`)
     }
   }
 
@@ -112,8 +112,8 @@ export default function HomePage() {
       </h1>
       <h2 className="page-subtitle">AI Powered Electrical Code</h2>
       <SearchBar onSearch={onSearch} />
-      {isLoading && <LoadingIndicator currentSearchText={currentSearchText} />}
-      <SearchResults error={error} searchResults={searchResults} searchTerm={searchTerm} />
+      {isLoading && <LoadingIndicator currentSearchText={currentSearchText}  />}
+      <SearchResults error={error} searchResults={searchResults} searchTerm={searchTerm} validationError={validationError}/>
     </div>
   );
 }
