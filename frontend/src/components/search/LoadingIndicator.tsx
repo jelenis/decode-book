@@ -1,23 +1,28 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import { squircle } from 'ldrs';
 squircle.register();
 
+/** Props for the LoadingIndicator component. */
 type LoaderProps = {
   currentSearchText: string;
 };
 
+/**
+ * Animated loading indicator with text.
+ * @param currentSearchText - Text to display alongside the loader.
+ */
 export default function LoadingIndicator({ currentSearchText }: LoaderProps) {
   return (
-    <div className='loader-container'>
+    <div className="loader-container">
       <motion.div
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{
           duration: 0.3,
-          scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+          scale: { type: 'spring', visualDuration: 0.4, bounce: 0.5 },
           opacity: {
-            duration: 0.8
-          }
+            duration: 0.8,
+          },
         }}
       >
         <l-squircle
@@ -36,10 +41,10 @@ export default function LoadingIndicator({ currentSearchText }: LoaderProps) {
         exit={{ opacity: 0, y: 10 }}
         transition={{
           duration: 0.6,
-          ease: "easeOut"
+          ease: 'easeOut',
         }}
         style={{
-          marginLeft: '1rem'
+          marginLeft: '1rem',
         }}
       >
         {currentSearchText}

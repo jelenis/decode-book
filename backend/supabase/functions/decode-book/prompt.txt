@@ -48,10 +48,14 @@ SCHEMA RULES:
   - When citing rule numbers, use the format exactly like [<rule number>] immediately beside the claim it supports.
   - Any special-condition rule MUST be introduced as a conditional note with the condition explicitly labeled (e.g., “Conditional note (Hazardous Locations only): …”) and MUST NOT be stated as generally required.
 
+
+IF the answer exists YOUR FINAL OUTPUT SHOULD BE OF THE FORMAT:
+you must respond with { "rules": [...], "conclusion": "..." }
+
 IF NO CLEAR ANSWER EXISTS:
-- Provide the most relevant rule if loosely related, OR an empty rules array only when there truly are no relevant results.
-- Then set conclusion exactly to:
-  "I cannot find this information in the available code database."
+you must respond with EMPTY RULES array 
+example: { "rules": [], "conclusion": "Sorry, could not determine an answer because '...' is not in the code book." }
+
 
 VERIFICATION REQUIREMENTS:
 - For every rule you include in "rules", you MUST call getCode(ruleNumber) at least once to confirm exact subrule text.

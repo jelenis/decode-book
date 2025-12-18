@@ -4,15 +4,15 @@ import { createClient } from '@supabase/supabase-js';
 import { SUPABASE_ANON_KEY, SUPABASE_URL } from '../components/common/utils';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+/** Type for broadcast update messages from Supabase. */
 type BroadCastupdate = {
   update: string;
 };
 
 /**
- * React Hook that wraps Supabase 
- * on each message update part of the payload is returned.
- * @param channelName unique id of channel
- * @returns the most recent broadcasted onthe channel
+ * Custom hook for subscribing to Supabase broadcast channels.
+ * @param channelName - Name of the channel to join.
+ * @returns The latest update message from the channel.
  */
 export default function useChannel(channelName: string) {
   const [update, setUpdate] = useState<string>('');
@@ -25,8 +25,7 @@ export default function useChannel(channelName: string) {
       config: { private: false },
     });
 
-    channel.on("broadcast", { event: "*" }, ({payload}) => {
-      
+    channel.on('broadcast', { event: '*' }, ({ payload }) => {
       if (typeof payload?.update === 'string') {
         setUpdate(payload.update);
       }
@@ -37,7 +36,7 @@ export default function useChannel(channelName: string) {
     return () => {
       channel.unsubscribe();
     };
-  }, [channelName]); 
+  }, [channelName]);
 
   return update;
 }
