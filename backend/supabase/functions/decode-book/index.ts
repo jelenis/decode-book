@@ -106,22 +106,7 @@ function getIP(headers) {
     headers.get('cf-connecting-ip') || headers.get('x-real-ip') || '';
 }
 
-  /*
-  Callback invoked by the assistant when it triggers one of the
-  tools (`codeLookUp` or `semanticSearch`). We translate those tool
-  calls into progress messages sent to the client's realtime channel.
-  */
-  function onToolCall(toolName, args) {
-    if (toolName === 'codeLookUp') {
-      sendUpdate(name, {
-        update: `Looking up code rule ${args.ruleId}`
-      });
-    } else if (toolName === 'semanticSearch') {
-      sendUpdate(name, {
-        update: 'Performing semantic lookup'
-      });
-    }
-  }
+
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -149,7 +134,22 @@ Deno.serve(async (req) => {
     update: 'Preparing assistant…'
   });
 
-
+  /*
+  Callback invoked by the assistant when it triggers one of the
+  tools (`codeLookUp` or `semanticSearch`). We translate those tool
+  calls into progress messages sent to the client's realtime channel.
+  */
+  function onToolCall(toolName, args) {
+    if (toolName === 'codeLookUp') {
+      sendUpdate(name, {
+        update: `Looking up code rule ${args.ruleId}`
+      });
+    } else if (toolName === 'semanticSearch') {
+      sendUpdate(name, {
+        update: 'Performing semantic lookup'
+      });
+    }
+  }
 
   /*
   Basic input validation: ensure `searchTerm` is a string within
