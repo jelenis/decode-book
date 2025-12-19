@@ -1,6 +1,8 @@
 import CodeRuleCard from '../rules/CodeRuleCard';
 import type { CodeRule } from '../common/types';
 import LoadingIndicator from './LoadingIndicator';
+import ErrorBox from '../common/ErrorBox'
+
 import type { ReactNode } from 'react';
 import { groupBy } from '../common/utils';
 import ContentSection from '../rules/ContentSection';
@@ -102,11 +104,9 @@ export default function SearchResults({
 
   return (
     <div className="search-results" style={{ marginTop: '2rem' }}>
-
+    
       {validationError && (
-        <div className="validation-error" role="alert" aria-live="polite">
-          {validationError}
-        </div>
+        <ErrorBox message={validationError}/>
       )}
 
       {hasResults && (

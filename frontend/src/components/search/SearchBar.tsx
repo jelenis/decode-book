@@ -5,7 +5,7 @@ import { useState } from 'react';
  * Input form for searching electrical codes.
  * @param onSearch - Callback function to handle form submission.
  */
-export default function SearchBar({ onSearch }: { onSearch: (formData: FormData) => void }) {
+export default function SearchBar({ onSearch, disabled }: { onSearch: (formData: FormData) => void, disabled: boolean }) {
   const [text, setText] = useState('');
 
   return (
@@ -14,13 +14,17 @@ export default function SearchBar({ onSearch }: { onSearch: (formData: FormData)
         name="search"
         aria-label="search"
         className="search-bar"
+        disabled={disabled}
         maxLength={160}
         placeholder="Is EMT good for outdoor use?"
         autoComplete="off"
         value={text}
         onChange={(e) => setText(e.currentTarget.value)}
       />
-      <CiSearch />
+      <div className='vertical'></div>
+      <button className='btn'>
+        <CiSearch/>
+      </button>
     </form>
   );
 }
