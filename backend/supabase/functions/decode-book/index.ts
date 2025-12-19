@@ -5,8 +5,27 @@ when running under Deno in the Supabase environment.
 */
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createDecodeAssistant } from './decode.ts';
-import { createClient } from 'npm:@supabase/supabase-js@2';
+import { createClient } from 'npm:@supabase/supabase-js@latest';
+import { Redis } from 'npm:@upstash/redis@latest'
+import { Ratelimit } from "https://cdn.skypack.dev/@upstash/ratelimit@latest";
+
+
 console.info('server started');
+
+/**
+ * preform serverless rate limiting use Redis
+ */
+const redis = new Redis({
+  url: 'https://resolved-deer-29683.upstash.io',
+  token: Deno.env.get('REDIS_TOKEN'),
+})
+// Create a new ratelimiter, that allows 2 requests per 10 seconds
+const ratelimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(2, '10 s'),
+  analytics: true,
+})
+
 
 /*
 Create and configure the `assistant` instance.
@@ -26,6 +45,7 @@ export const corsHeaders = {
   'Access-Control-Allow-Headers': 'x-client-info, apikey, content-type',
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
 };
+
 
 /*
 Create a lightweight Supabase client for broadcasting realtime updates.
@@ -81,21 +101,10 @@ function successResponse(data) {
   });
 }
 
-Deno.serve(async (req) => {
-  if (req.method === 'OPTIONS') {
-    return new Response('ok', {
-      headers: corsHeaders
-    });
-  }
-
-  const { name, searchTerm } = await req.json();
-  /*
-  Notify the frontend that we're preparing the assistant. The frontend
-  can use this to show a loading state tied to the session `name`.
-  */
-  sendUpdate(name, {
-    update: 'Preparing assistant…'
-  });
+function getIP(headers) {
+  return headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    headers.get('cf-connecting-ip') || headers.get('x-real-ip') || '';
+}
 
   /*
   Callback invoked by the assistant when it triggers one of the
@@ -113,6 +122,34 @@ Deno.serve(async (req) => {
       });
     }
   }
+
+Deno.serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', {
+      headers: corsHeaders
+    });
+  }
+
+  const ip = getIP(req.headers);
+  console.log(`IP: ${ip} has made a request`)
+  const { success } = await ratelimit.limit(ip)
+
+  if (!success) {
+    return errorResponse(new Error("limit exceeded, too many requests"));
+  }
+
+
+  const { name, searchTerm } = await req.json();
+
+  /*
+  Notify the frontend that we're preparing the assistant. The frontend
+  can use this to show a loading state tied to the session `name`.
+  */
+  sendUpdate(name, {
+    update: 'Preparing assistant…'
+  });
+
+
 
   /*
   Basic input validation: ensure `searchTerm` is a string within

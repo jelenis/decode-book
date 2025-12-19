@@ -1,11 +1,11 @@
-import CodeRuleCard from '../rules/CodeRuleCard';
-import type { CodeRule } from '../common/types';
+import CodeRuleCard from '@/components/rules/CodeRuleCard';
+import type { CodeRule } from '@/components/common/types';
 import LoadingIndicator from './LoadingIndicator';
-import ErrorBox from '../common/ErrorBox'
+import ErrorBox from '@/components/common/ErrorBox';
 
 import type { ReactNode } from 'react';
-import { groupBy } from '../common/utils';
-import ContentSection from '../rules/ContentSection';
+import { groupBy } from '@/components/common/utils';
+import ContentSection from '@/components/rules/ContentSection';
 import { motion } from 'framer-motion';
 import { CiStickyNote } from 'react-icons/ci';
 

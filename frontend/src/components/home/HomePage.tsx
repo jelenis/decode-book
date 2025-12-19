@@ -4,14 +4,14 @@ import { nanoid } from 'nanoid';
 import { useQuery } from '@tanstack/react-query';
 import { ToastContainer, toast } from 'react-toastify';
 
-import SearchBar from '../search/SearchBar';
-import SearchResults from '../search/SearchResults';
-import useChannel from '../../hooks/useChannel';
-import ExampleQuery from '../examples/ExampleQuery';
+import SearchBar from '@/components/search/SearchBar';
+import SearchResults from '@/components/search/SearchResults';
+import useChannel from '@/hooks/useChannel';
+import ExampleQuery from '@/examples/ExampleQuery';
 
-import { SUPABASE_ANON_KEY, SUPABASE_FUNCTION_URL, DEV_MODE } from '../common/utils';
-import LoadingIndicator from '../search/LoadingIndicator';
-import ErrorBoundary from "../common/ErrorBoundary"
+import { SUPABASE_ANON_KEY, SUPABASE_FUNCTION_URL, DEV_MODE } from '@/components/common/utils';
+import LoadingIndicator from '@/components/search/LoadingIndicator';
+import ErrorBoundary from "@/components/common/ErrorBoundary"
 
 if (DEV_MODE) {
     console.log('DEV MODE ACTIVATED', DEV_MODE);

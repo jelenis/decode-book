@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
-import { SUPABASE_ANON_KEY, SUPABASE_URL } from '../components/common/utils';
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from '@/components/common/utils';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 /** Type for broadcast update messages from Supabase. */

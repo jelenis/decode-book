@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { capitalize } from '../common/utils';
+import { capitalize } from '@/components/common/utils';
 
 /** Props for the ContentSection component. */
 interface SectionProps {

@@ -1,5 +1,5 @@
-import type { CodeRule } from '../common/types';
-import { capitalize, abbreviateLabel } from '../common/utils';
+import type { CodeRule } from '@/components/common/types';
+import { capitalize, abbreviateLabel } from '@/components/common/utils';
 
 /**
  * Displays a single electrical code rule with title, subrules, and explanation.
