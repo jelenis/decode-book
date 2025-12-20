@@ -150,7 +150,7 @@ Deno.serve(async (req) => {
       });
     } else if (toolName === 'keywordSearch') {
       sendUpdate(name, {
-        update: 'Matching search terms'
+        update: 'Verifying results...'
       });
     }
   }

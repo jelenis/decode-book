@@ -25,9 +25,9 @@ export function createDecodeAssistant(config) {
     apiKey: config.openaiApiKey,
   });
 
-  async function keywordSearch(text) {
+  async function keywordSearch(terms: string[]) {
     const { data, error } = await supabase.rpc("keyword_search", {
-        query: text
+        terms
     });
     if (error) throw error;
     return data;
@@ -67,21 +67,24 @@ export function createDecodeAssistant(config) {
   const CECAnswerSchema = z.object({
     rules: z.array(
       z.object({
-        ruleNumber: z.string().describe("CEC rule number, e.g. '12-3016'"),
+        ruleNumber: z.string().describe("CEC rule number like '12-3016', or 'UNKNOWN' if it cannot be confirmed."),
         section: z.string().nullable().describe("Section name if available"),
         subsection: z.string().nullable().describe("Subsection name if available"),
         title: z.string().nullable().describe("Rule title if available"),
-        subRuleLabel: z.array(z.string()).nullable().describe(
-          "Array of sub-rule labels (e.g. ['1)', '2)(b)']) if they can be inferred from the text; otherwise null."
+        subRuleLabel: z.array(z.string()).describe(
+          "Array of sub-rule labels (e.g. ['1)', '2)(b)']). Use [] if they cannot be inferred."
         ),
         relevanceExplanation: z.string().describe(
-          "Very brief explanation of how this sub-rule supports the conclusion."
+          "Brief explanation of how this sub-rule supports the conclusion. 1-2 sentances. Do not include subrule labels."
         ),
       })
-    ),
+    ).min(0).max(4),
     conclusion: z.string().describe(
-      "A single brief sentence that answers the user's question, citing the relevant rule numbers without the subrule label (e.g. '[12-3016] [30-1206]'). Special-condition rules MUST be explicitly indicated. If no conclusion can be found, explain why."
-    ),
+      "Up to 4 sentences that answer the user's question in plain language. " +
+      "YOU MUST CITE RULE NUMBERS IN THIS FORMAT '[12-3016]' immediately next to the claim they support. " +
+      "Any special-condition rule must be clearly labeled as conditional. " +
+      "If the answer can't be confirmed from the code text, explain why."
+    )
   });
 
   /*
@@ -129,7 +132,7 @@ export function createDecodeAssistant(config) {
           },
         }),
         keywordSearch: tool({
-          description: 'Search for relevant electrical code rules using tsvector search on the text provided and returns up to 10 results.',
+          description: 'Search for relevant electrical code rules using tsvector search on the text provided.',
           inputSchema: z.object({text: z.string().describe('Query string for keyword based search.')}),
           execute: async ({text}) => {
 
@@ -137,8 +140,8 @@ export function createDecodeAssistant(config) {
             const sanitized = text.toLowerCase()
             .replace(/[^a-z0-9]+/g, " ")
             .trim()
-            .split(' ')
-            .join(' | ');
+            .split(' ');
+         
 
             onToolCall("keywordSearch", { sanitized });
             const result = await keywordSearch(sanitized);
