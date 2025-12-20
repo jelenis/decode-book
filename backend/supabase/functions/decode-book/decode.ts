@@ -12,6 +12,7 @@ import { createClient } from "npm:@supabase/supabase-js";
 import { createOpenAI } from "npm:@ai-sdk/openai";
 import { embed, generateText, Output, stepCountIs, tool } from "npm:ai";
 import { z } from "npm:zod";
+
 const PROMPT_URL = new URL("./prompt.txt", import.meta.url);
 const SYSTEM_PROMPT = await Deno.readTextFile(PROMPT_URL);
 
@@ -23,6 +24,15 @@ export function createDecodeAssistant(config) {
   const openai = createOpenAI({
     apiKey: config.openaiApiKey,
   });
+
+  async function keywordSearch(text) {
+    const { data, error } = await supabase.rpc("keyword_search", {
+        query: text
+    });
+    if (error) throw error;
+    return data;
+  }
+
   async function search(query) {
     // Convert the user's query into an embedding, then call a
     // Supabase RPC (`match_codes`) that performs a vector similarity
@@ -118,6 +128,25 @@ export function createDecodeAssistant(config) {
             return search(semanticQuery);
           },
         }),
+        keywordSearch: tool({
+          description: 'Search for relevant electrical code rules using tsvector search on the text provided and returns up to 10 results.',
+          inputSchema: z.object({text: z.string().describe('Query string for keyword based search.')}),
+          execute: async ({text}) => {
+
+            
+            const sanitized = text.toLowerCase()
+            .replace(/[^a-z0-9]+/g, " ")
+            .trim()
+            .split(' ')
+            .join(' | ');
+
+            onToolCall("keywordSearch", { sanitized });
+            const result = await keywordSearch(sanitized);
+            console.log(result);
+            return result;
+
+          }
+        })
       },
       system: SYSTEM_PROMPT,
       prompt: query,

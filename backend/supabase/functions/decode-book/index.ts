@@ -8,6 +8,7 @@ import { createDecodeAssistant } from './decode.ts';
 import { createClient } from 'npm:@supabase/supabase-js@latest';
 import { Redis } from 'npm:@upstash/redis@latest'
 import { Ratelimit } from "https://cdn.skypack.dev/@upstash/ratelimit@latest";
+import { tool } from "npm:ai";
 
 
 console.info('server started');
@@ -106,8 +107,6 @@ function getIP(headers) {
     headers.get('cf-connecting-ip') || headers.get('x-real-ip') || '';
 }
 
-
-
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', {
@@ -140,6 +139,7 @@ Deno.serve(async (req) => {
   calls into progress messages sent to the client's realtime channel.
   */
   function onToolCall(toolName, args) {
+    console.log(`calling tool ${toolName} with ${JSON.stringify(args)}`)
     if (toolName === 'codeLookUp') {
       sendUpdate(name, {
         update: `Looking up code rule ${args.ruleId}`
@@ -147,6 +147,10 @@ Deno.serve(async (req) => {
     } else if (toolName === 'semanticSearch') {
       sendUpdate(name, {
         update: 'Performing semantic lookup'
+      });
+    } else if (toolName === 'keywordSearch') {
+      sendUpdate(name, {
+        update: 'Matching search terms'
       });
     }
   }
