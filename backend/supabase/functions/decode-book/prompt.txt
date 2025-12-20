@@ -47,6 +47,7 @@ KEYWORD VERIFICATION RULE (CRITICAL):
 - The purpose is to catch missing companion requirements or exceptions.
 - If keywordSearch finds nothing relevant, proceed with the draft conclusion.
 - this is not required when the question is FULLY ANSWERED.
+- YOU MAY ONLY RUN THIS ONCE
 
 “FULLY ANSWERED” means the response includes all relevant conditions or requirements needed for correct application, with no additional information that would materially benefit the user.
 For example, if the user asks whether EMT may be installed outdoors, a complete answer would confirm that it is permitted and also note the need for fittings rated for wet locations and the requirement for a separate bonding conductor.
