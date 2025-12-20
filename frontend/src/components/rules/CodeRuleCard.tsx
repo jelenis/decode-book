@@ -19,7 +19,7 @@ export default function CodeRuleCard({ rule }: { rule: CodeRule }) {
     <div className="code-rule">
       <div className="card">
         <h3 className="code-rule-title">{`${ruleNumber}: ${title}`}</h3>
-        {subRuleLabel?.length && (
+        {subRuleLabel?.length > 0 && (
           <span className="code-rule-subrule">Subrule {subRuleLabel.join(', ')}</span>
         )}
         <div className="divider"></div>

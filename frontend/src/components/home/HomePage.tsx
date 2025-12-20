@@ -85,7 +85,7 @@ export default function HomePage() {
         queryKey: [searchTerm.toLowerCase()],
         queryFn: async () => queryDecodeBook(searchTerm, channelName, setCurrentSearchText),
         enabled: searchTerm.length > 0,
-        staleTime: 2 * 60 * 1000, // 2 minutes
+        staleTime: Infinity, // 2 minutes
         retry: false,
     });
 
