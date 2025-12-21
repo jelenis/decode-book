@@ -93,7 +93,10 @@ body, body, #root {
 }
 
 .page-footer {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.1rem;
   margin: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.16);
   color: var(--text-subtle);
@@ -102,6 +105,10 @@ body, body, #root {
   font-size: 1.2rem;
   font-weight: 300;
 }
+.page-footer a {
+  color: inherit;
+}
+
 
 /* =====================
    Typography
@@ -112,11 +119,10 @@ h1 {
   font-weight: 800;
   line-height: 1.1;
 }
-
-/* very small screens */
 .page-title svg {
   vertical-align: middle;
 }
+/* very small screens */
 @media (max-width: 400px) {
   .page-title {
     font-size: 2.1rem;
