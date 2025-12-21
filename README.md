@@ -18,13 +18,12 @@ The system also adds important follow-up details that users often don’t realiz
 - Schema-only output for machine-parseable, auditable results
 - Clear handling of default assumptions vs conditional (special-case) rules
 
----
 
-## Example Output
+### Example Output
 
 <figure>
   <img src="/docs/example.png" alt="Screenshot of the results produced by asking the application an electrical question" width="500">
-  <figcaption>Results return important follow-up details and provide evidance in the form of code rules.</figcaption>
+  <figcaption>Results return important follow-up details and provide evidance for all claims in the form of code rules.</figcaption>
 </figure>
 
 ---
