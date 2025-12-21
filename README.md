@@ -6,7 +6,8 @@ Decode-Book is a portfolio project that looks at how retrieval-augmented generat
 It combines semantic search, keyword search, and rule-based logic to answer electrical code questions with proper citations and the conditions that actually matter in real installations.
 The system also adds important follow-up details that users often don’t realize they need to ask about, helping turn simple questions into complete, usable answers.
 
-![Screenshot of the results produced by asking the application an electrical question](/docs/example.png)
+### Try it out here! [Decode Book](https://decodebook.netlify.app/)
+
 ---
 
 ## 🚀 Core Features
@@ -16,6 +17,15 @@ The system also adds important follow-up details that users often don’t realiz
 - Tool-driven RAG pipeline that enforces verification before answering
 - Schema-only output for machine-parseable, auditable results
 - Clear handling of default assumptions vs conditional (special-case) rules
+
+---
+
+## Example Output
+
+<figure>
+  <img src="/docs/example.png" alt="Screenshot of the results produced by asking the application an electrical question" width="500">
+  <figcaption>Results return important follow-up details and provide evidance in the form of code rules.</figcaption>
+</figure>
 
 ---
 
