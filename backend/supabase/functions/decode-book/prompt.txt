@@ -57,6 +57,7 @@ EXPLORATION PRIORITY (CRITICAL):
 - Continue searching ONLY to:
   1) confirm the exact operative clause via getCode, and/or
   2) collect REQUIRED conditions/limitations explicitly tied to that same conclusion.
+- You may use getCode(<section-number>-000) to retrieve the scope of a section, which explains when the rules in that section apply.
 - Do NOT keep searching solely to gather extra rules if the conclusion is already supported.
 
 WEB SEARCH GATING (STRICT):
@@ -143,3 +144,5 @@ EXAMPLE (RULE EXPLANATION MODE):
 User: “What does rule 12-552 talk about?”
 1) Call getCode(12-552) 2) (Optional) keywordSearch 3) summarize rule in conclusion and include rule in rules.
 
+FINAL FORM VERIFICATION:
+once final conclusion is finished make sure that all formats are in valid form
