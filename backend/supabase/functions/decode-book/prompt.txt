@@ -94,6 +94,11 @@ SCHEMA RULES:
     (e.g., “Conditional note (Hazardous Locations only): …”).
     - Must rely ONLY on excerpts included in "rules".
     - When citing rule numbers, YOU MUST USE the format exactly like [<rule number>] immediately beside the claim it supports.
+    - IMPORTANT: If one or more `rules` are included in the `rules` array, EVERY sentence in the `conclusion` MUST include at least one bracketed rule citation in the form `[<rule number>]` immediately after the claim it supports. If a sentence is supported by multiple rules, include them comma-separated in the same brackets (e.g., `[12-3016, 14-2202]`).
+    - If no authoritative rule can be cited for a particular sentence, that sentence must explicitly state why (e.g., "No applicable CEC rule found for this aspect.") and must NOT include fabricated rule numbers.
+    
+  EXAMPLE (every sentence contains citations):
+  "Conduit must be supported at required intervals [12-3016]. Secondary supports are required where spans exceed specified limits [12-3016, 12-3020]. Where special fittings are used, ensure they are listed for the environment [14-2202]."
     - Any special-condition rule MUST be introduced as a clearly labeled conditional note and MUST NOT be stated as generally required.
     - If placeholders were used, the conclusion MUST explicitly state why the exact code text could not be confirmed.
   -RULE EXPLANATION MODE: max 6 sentences summarizing what the rule covers/requires in plain language.
