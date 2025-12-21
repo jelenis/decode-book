@@ -2,8 +2,11 @@
 
 **AI-assisted electrical code search, reasoning, and citation engine**
 
-Decode-Book is a portfolio project that explores how retrieval-augmented generation (RAG) can be applied to structured regulatory text (electrical code material) to produce accurate, scoped, and fully-qualified answers instead of hallucinated summaries. The project combines semantic search, keyword search, and deterministic rule-gating logic to answer electrical code questions with citations and conditions.
+Decode-Book is a portfolio project that looks at how retrieval-augmented generation (RAG) can be used to work with structured regulatory text and produce clear, accurate answers instead of vague or hallucinated summaries.
+It combines semantic search, keyword search, and rule-based logic to answer electrical code questions with proper citations and the conditions that actually matter in real installations.
+The system also adds important follow-up details that users often don’t realize they need to ask about, helping turn simple questions into complete, usable answers.
 
+![Screenshot of the results produced by asking the application an electrical question](/docs/example.png)
 ---
 
 ## 🚀 Core Features
@@ -28,7 +31,7 @@ This tool-first workflow prevents the model from answering without explicit evid
 
 ---
 
-## RAG & Prompting (what's special here)
+## RAG & Prompting
 
 The project uses a detailed prompt (see `backend/supabase/functions/decode-book/prompt.txt`) that enforces:
 
