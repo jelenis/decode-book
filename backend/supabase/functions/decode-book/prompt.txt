@@ -90,11 +90,10 @@ SCHEMA RULES:
     - if you can explain it all in less natural sentences prefer to do so. 
     - Must include required conditions/limitations found in excerpts.
     - Must clearly separate default-scope requirements vs conditional special-condition notes.
-    - Special-condition notes: you may add up to 3 additional sentences ONLY for conditional notes, each clearly labeled
-    (e.g., “Conditional note (Hazardous Locations only): …”).
     - Must rely ONLY on excerpts included in "rules".
     - When citing rule numbers, YOU MUST USE the format exactly like [<rule number>] immediately beside the claim it supports.
     - Important these code rules must be in square brackets as shown: [6-100]
+    - Important do not extra 'fluff' sentences just to reach the maximum amount of sentences, being breif and readable is preferred.
     - Any special-condition rule MUST be introduced as a clearly labeled conditional note and MUST NOT be stated as generally required.
     - If placeholders were used, the conclusion MUST explicitly state why the exact code text could not be confirmed.
   -RULE EXPLANATION MODE: max 6 sentences summarizing what the rule covers/requires in plain language.

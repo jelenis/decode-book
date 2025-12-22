@@ -1,8 +1,9 @@
-/* =====================
-   Imports & Variables
-   ===================== */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nova+Round&family=Poly:ital@0;1&display=swap');
 
+
+/* =====================
+   Colours & Font Variables
+   ===================== */
 :root {
   --bg-color: #f1eeed;
   --bg-color-dark: #eae7e6;
@@ -13,8 +14,12 @@
   --text-subtle: #9db2b8;
   --serif-font: 'Poly', Georgia, 'Times New Roman', Times, serif;
   --alternate-font: 'Nova Round', system-ui;
+  --fs-h1: 3rem;
+  --fs-h2: 1.5rem;
+  --fs-h3: 1.295rem;
+  --fs-h4: 1.1rem;
+  --fs-body: 1.19rem;
 }
-
 
 :root {
   font-family: 'Inter', Helvetica, Arial, sans-serif;
@@ -25,11 +30,6 @@
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg-color-dark);
   color: var(--text-primary);
-  --fs-h1: 3rem;
-  --fs-h2: 1.5rem;
-  --fs-h3: 1.295rem;
-  --fs-h4: 1.1rem;
-  --fs-body: 1.19rem;
   font-size: 14px; /* mobile default */
 }
 

@@ -13,7 +13,6 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-
       {/* Container will center the content and provide maximum width */}
       <div className='container'>
         <h1 className="page-title">
@@ -27,7 +26,14 @@ function App() {
 
       {/* Webpage footer */}
       <div className='page-footer'>
-        Created by John Elenis <a href='https://github.com/jelenis'><FaGithub/></a>
+        Created by John Elenis 
+        <a 
+        style={{
+          marginTop: '3px'
+        }}
+        href='https://github.com/jelenis'>
+          <FaGithub/>
+        </a>
       </div>
     </QueryClientProvider>
   );

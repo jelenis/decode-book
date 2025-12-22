@@ -1,5 +1,7 @@
 import { CiSearch } from 'react-icons/ci';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import useMedia from 'use-media';
+
 import {questions} from '@/examples/sampleQuestions.json'
 
 /**
@@ -9,10 +11,22 @@ import {questions} from '@/examples/sampleQuestions.json'
 export default function SearchBar({ onSearch, disabled }: { onSearch: (formData: FormData) => void, disabled: boolean }) {
   const [text, setText] = useState('');
   const randomIndex = Math.floor(Math.random()*questions.length);
-  const randomPlaceholder = questions[randomIndex];
+  const isSmall = useMedia({maxWidth: '520px'});
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  let randomPlaceholder = questions[randomIndex];
+
+  const smallPlaceHolderLen = 32; // arbitrary length;
+  if (isSmall && randomPlaceholder.length > smallPlaceHolderLen) {
+    // trim to a smaller length, find the last space, and then append elipsis
+    const splitPlaceholder = [...randomPlaceholder].slice(0,smallPlaceHolderLen);
+    const lastSpaceIdx = splitPlaceholder.lastIndexOf(' ');
+    randomPlaceholder = randomPlaceholder.slice(0, lastSpaceIdx) + '...'
+  }
+
   return (
     <form id="searchbar" className="search-bar-container" action={onSearch}>
       <input
+        ref={inputRef}
         name="search"
         aria-label="search"
         className="search-bar"
@@ -30,3 +44,4 @@ export default function SearchBar({ onSearch, disabled }: { onSearch: (formData:
     </form>
   );
 }
+
