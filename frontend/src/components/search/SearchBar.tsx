@@ -1,8 +1,14 @@
 import { CiSearch } from 'react-icons/ci';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useMemo, useEffect } from 'react';
 import useMedia from 'use-media';
 
 import {questions} from '@/examples/sampleQuestions.json'
+import { PiPlaceholder } from 'react-icons/pi';
+import useFittingText from '@/hooks/useFittingText';
+
+
+
+
 
 /**
  * Input form for searching electrical codes.
@@ -10,18 +16,14 @@ import {questions} from '@/examples/sampleQuestions.json'
  */
 export default function SearchBar({ onSearch, disabled }: { onSearch: (formData: FormData) => void, disabled: boolean }) {
   const [text, setText] = useState('');
-  const randomIndex = Math.floor(Math.random()*questions.length);
-  const isSmall = useMedia({maxWidth: '520px'});
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  let randomPlaceholder = questions[randomIndex];
+  const [randomText] = useState(() => {
+      const randomIndex = Math.floor(Math.random()*questions.length);
+      const randomPlaceholder = questions[randomIndex];
+      return randomPlaceholder
+  });
 
-  const smallPlaceHolderLen = 32; // arbitrary length;
-  if (isSmall && randomPlaceholder.length > smallPlaceHolderLen) {
-    // trim to a smaller length, find the last space, and then append elipsis
-    const splitPlaceholder = [...randomPlaceholder].slice(0,smallPlaceHolderLen);
-    const lastSpaceIdx = splitPlaceholder.lastIndexOf(' ');
-    randomPlaceholder = randomPlaceholder.slice(0, lastSpaceIdx) + '...'
-  }
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const placeholder = useFittingText(inputRef, randomText);
 
   return (
     <form id="searchbar" className="search-bar-container" action={onSearch}>
@@ -32,7 +34,7 @@ export default function SearchBar({ onSearch, disabled }: { onSearch: (formData:
         className="search-bar"
         disabled={disabled}
         maxLength={160}
-        placeholder={randomPlaceholder}
+        placeholder={placeholder}
         autoComplete="off"
         value={text}
         onChange={(e) => setText(e.currentTarget.value)}
