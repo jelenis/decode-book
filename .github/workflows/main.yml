@@ -1,0 +1,17 @@
+name: Upstash Keep-Alive
+
+on:
+  schedule:
+    # Runs every 3 days at 00:00 UTC (well within the 7-day Supabase / 14-day Upstash limits)
+    - cron: '0 0 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  ping_services:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Upstash Redis
+        run: |
+          # Uses the Upstash REST API to set a 'last_ping' key with the current timestamp
+          curl "${{ secrets.UPSTASH_URL }}/set/last_ping/$(date +%s)" \
+          -H "Authorization: Bearer ${{ secrets.UPSTASH_TOKEN }}"
